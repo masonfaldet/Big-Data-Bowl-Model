@@ -4,9 +4,9 @@ This repository contains an experimental trajectory model for the [NFL Big Data 
 
 ## Overview
 
-The model treats player motion as a Neural ODE in phase space $ (p, q) $, where:
-- $ p $ denotes 2D field position $ (x, y) $, and  
-- $q$ denotes 2D velocity $ (v_x, v_y) $.
+The model treats player motion as a Neural ODE in phase space $(p, q)$, where:
+- $p$ denotes 2D field position $(x, y)$, and  
+- $q$ denotes 2D velocity $(v_x, v_y)$.
 
 A Velocity–Verlet integrator rolls trajectories forward in time using learned accelerations. Accelerations are predicted from a learned context that combines each player’s individual temporal history with interaction-aware features derived from relative positions.
 
@@ -23,14 +23,14 @@ The pipeline is composed of three main components:
 
 - **RPBEncoder (Relative Position Bias Encoder)**  
   Players attend to one another using self-attention with learned relative-position biases. Bias features are based on:
-  - Pairwise offsets $ (\Delta x, \Delta y)$,
+  - Pairwise offsets $(\Delta x, \Delta y)$,
   - Pairwise distance,
   - Same-side indicator (teammate vs opponent).
 
   This module refines each player’s embedding with interaction-aware context.
 
 - **AccelMLP + Velocity–Verlet Rollout**  
-  A small MLP predicts accelerations $ (a_x, a_y) $ from:
+  A small MLP predicts accelerations $(a_x, a_y)$ from:
   - Temporal encoder embeddings,
   - Interaction embeddings from the RPBEncoder,
   - Current velocity,
