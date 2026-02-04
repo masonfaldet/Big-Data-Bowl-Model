@@ -108,7 +108,7 @@ def unify_left_direction(df: pd.DataFrame, cfg: Config) -> pd.DataFrame:
     for col in ('dir','o'):
         if col in df.columns:
             df.loc[right, col] = (df.loc[right, col] + 180.0) % 360.0
-    # ball landing (not used now, but keep consistent)
+    # ball landing
     if 'ball_land_x' in df.columns:
         df.loc[right, 'ball_land_x'] = cfg.FIELD_X_MAX - df.loc[right, 'ball_land_x']
     if 'ball_land_y' in df.columns:
@@ -974,7 +974,7 @@ def main():
             print(f"Stage 1 curriculum T_out={T_out_curr}")
             loaders = {"train": loader_tr, "val": loader_va}
 
-            # Use your config knobs for warmup vs cap
+            # Use config knobs for warmup vs cap
             epochs = cfg.stage1_epochs if T_out_curr >= cfg.stage1_out_cap else cfg.stage1_warmup_epochs
             best1, hist1 = train(model, loaders, cfg, epochs=epochs, stage="stage1", log_prefix="s1")
 
